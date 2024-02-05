@@ -1,10 +1,3 @@
-Após clonar --> escolher a branch --- (apagarei isso antes de enviarmos)
-
-### git branch
- * ExerciciosBancoDeDados_SquadMaryJackson
-* ExerciciosPOO_SquadMaryJackson
-* * main
-
 ### Squad Mary Jackson:
 
 * Ana Carolina Torchia De Souza
