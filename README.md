@@ -12,7 +12,7 @@ Após clonar --> escolher a branch --- (apagarei isso antes de enviarmos)
 * Daniela do Nascimento Dalla Vecchia
 * Juliana Silva Gonçalves
 * Lorrayne Santana 
-* Luana Cardoso
+* Luana Aparecida Cardoso
 * Lucimara Costa Bustamante
 * Mariana de Castro Mehler Elias
 * Nayla Hilana da Silva 
