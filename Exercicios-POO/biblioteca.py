@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
 from database import conectar_banco_dados, fechar_conexao
 #rodar com arquivo database.py
@@ -34,6 +34,8 @@ class Livro(EntidadeBiblioteca):
         super().__init__(titulo, editora, generos)
         self._exemplares_disponiveis = exemplares_disponiveis
         self._max_renovacoes = max_renovacoes
+        self.editora = editora
+        self.generos = generos
 
     @property
     def exemplares_disponiveis(self):
@@ -50,7 +52,7 @@ class Livro(EntidadeBiblioteca):
         self._exemplares_disponiveis += 1
 
     def obter_detalhes(self):
-        return f'Livro: {self.nome}, Editora: {self.telefone}, Generos: {self.nacionalidade}'
+        return f'Livro: {self.nome}, Editora: {self.editora}, Gêneros: {self.generos}' 
 
 class Usuario(EntidadeBiblioteca):
     def obter_detalhes(self):
@@ -61,7 +63,7 @@ class Emprestimo:
         self._livro = livro
         self._usuario = usuario
         self._data_emprestimo = datetime.now()
-        self._data_devolucao = None
+        self._data_devolucao = self._data_emprestimo + timedelta(days=7)  # Data de devolução é a data de empréstimo + 7 dias
         self._estado = "emprestado"
         self._num_renovacoes = 0
 
@@ -112,7 +114,7 @@ class Biblioteca:
         if emprestimo in self._emprestimos:
             if emprestimo._livro._max_renovacoes is None or emprestimo._num_renovacoes < emprestimo._livro._max_renovacoes:
                 emprestimo._data_emprestimo = datetime.now()
-                emprestimo._data_devolucao = None
+                emprestimo._data_devolucao = self._data_emprestimo + timedelta(days=7)  # Data de devolução é a data de empréstimo + 7 dias
                 emprestimo._num_renovacoes += 1
                 return True
         return False
