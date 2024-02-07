@@ -1,0 +1,103 @@
+from abc import ABC, abstractmethod
+from datetime import datetime
+
+class Mercado(ABC):
+    def __init__(self, cliente, telefone, endereco):
+        self._cliente= cliente
+        self._telefone= telefone
+        self._endereco= endereco
+
+    @property
+    def cliente(self):
+        return self._cliente
+
+    @property
+    def telefone(self):
+        return self._telefone
+    
+    @property
+    def endereco(self):
+        return self._endereco
+    
+class Cliente(Mercado):
+    def __init__(self, cliente, telefone, endereco, forma_pagamento,): #fpagamento = débito, crédito, pix ou dinheiro
+        super().__init__(cliente, telefone, endereco )
+        self._forma_pagamento = forma_pagamento
+        
+    @property
+    def forma_pagamento(self):
+        return self._forma_pagamento
+
+class Produtos(Mercado):
+    def __init__(self, nome, estoque, categoria, preco):
+        self.nome=nome
+        self._estoque=estoque
+        self.categoria=categoria
+        self.fornecedor=[]
+        self.preco=preco
+
+    @property 
+    def estoque(self): 
+        return self._estoque
+    
+    @estoque.setter
+    def estoque(self, atualizacao_estoque):
+        self._estoque = atualizacao_estoque
+    
+    def comprar (self, quantidade):
+        if self.estoque >= quantidade:
+            self.estoque -= quantidade
+            return True
+        else:
+            return False
+        
+    def adicionar_fornecedores(self, fornecedores):
+        self.fornecedor.append(fornecedores)
+
+
+class EfetuarCompra(Mercado):
+    def __init__(self):
+        self._cliente=None
+        self.produtos=[]
+        self.quantidade=[]
+        self.forma_pagamento=["débito", "crédito", "pix", "dinheiro"]
+        self.data= datetime.now()
+
+    def add_produto(self, produto, quantidade):
+        self.produtos.append(produto)
+        self.quantidade.append(quantidade)
+
+    def atualizacao_estoque(self):
+        for i in range(len(self.produtos)):
+            self.produtos[i].estoque -= self.quantidade[i]
+        
+    
+    def valor_conta(self):
+        total_conta = 0
+        for i in range(len(self.produtos)):
+            total_conta += self.produtos[i].preco * self.quantidade[i]
+            return total_conta
+
+
+#Exemplo de aplicação do código:
+cliente1=Cliente("Marta", 8599994444, "Rua do Sino", "pix")
+produto1=Produtos("maça", 60, "fruta", 1)
+produto2=Produtos("recheado", 314, "bolacha", 1.4)
+produto3=Produtos("banana", 100, "fruta", 1.4)
+    
+compra = EfetuarCompra ()
+compra.add_produto(produto1,3)
+compra.add_produto(produto2,1)
+compra.add_produto(produto3,10)
+
+print("Detalhes da compra:")
+for i in range(len(compra.produtos)):
+    produto = compra.produtos[i]
+    quantidade = compra.quantidade[i]
+    print(f"Produto: {produto.nome}, Estoque restante: {produto.estoque}, Quantidade: {quantidade}")
+
+# Calcular o valor total da compra
+total = compra.valor_conta()
+print(f"Valor total da compra: R${total:.2f}")
+
+
