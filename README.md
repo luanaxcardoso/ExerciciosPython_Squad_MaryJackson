@@ -12,6 +12,6 @@
 * Tainá Maria Travassos Mota Martins
   
 
-### Organização da resolução:
+### Organização da resolução: ***
   
 Os membros listados foram as que participaram da resolução desse desafio.
